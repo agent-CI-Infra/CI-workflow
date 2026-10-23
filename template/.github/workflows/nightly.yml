@@ -1,0 +1,34 @@
+# Scheduled full run on the default branch: the daily lane keeps the board fresh.
+name: Nightly
+
+on:
+  schedule:
+    # 16:00 UTC is 00:00 Asia/Shanghai, so the run finishes before the working day.
+    - cron: '0 16 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  gate:
+    name: daily
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install
+        run: npm ci --no-audit --no-fund
+      - name: Gate lane daily
+        run: node scripts/gate/gate.mjs run --lane daily
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-gates-daily
+          path: gate-reports/
+          if-no-files-found: ignore
