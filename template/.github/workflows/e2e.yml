@@ -1,0 +1,35 @@
+# Expensive end-to-end journeys. They run when a PR is labelled "e2e" or dispatched by hand;
+# results are filed under the daily lane so they do not gate every PR.
+name: E2E
+
+on:
+  pull_request:
+    types: [labeled]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  gate:
+    name: daily
+    if: github.event_name != 'pull_request' || github.event.label.name == 'e2e'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install
+        run: npm ci --no-audit --no-fund
+      - name: Gate lane daily
+        run: node scripts/gate/gate.mjs run --lane daily
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-gates-daily
+          path: gate-reports/
+          if-no-files-found: ignore
