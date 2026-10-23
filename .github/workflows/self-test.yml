@@ -1,4 +1,4 @@
-name: ci-gates tests
+name: CI-workflow tests
 
 on:
   push:

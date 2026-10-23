@@ -1,8 +1,8 @@
-# AGENT.md — ci-gates + 单仓 Dashboard 自动化
+# AGENT.md — CI-workflow + 单仓 Dashboard 自动化
 
 > **读者**：用户自己的 AI coding agent。
 > **目标**：只依赖仓库内容和本文件，完成三件事：
-> 1. 在源仓接入 ci-gates 门禁（只上 CI 也可以）；
+> 1. 在源仓接入 CI-workflow（含门禁，只上 CI 也可以）；
 > 2. 用 `dashboard/single-repo` 模板建单仓 Dashboard 并发布；
 > 3. 按真实代码补充用例，让看板显示 ready/todo/skipped 数量。
 >
@@ -39,7 +39,7 @@
 模板地址：
 
 - 单仓看板模板：`https://github.com/agent-CI-Infra/dashboard/tree/main/single-repo`
-- 源仓模板目录：`https://github.com/agent-CI-Infra/ci-gates/tree/main/template`
+- 源仓模板目录：`https://github.com/agent-CI-Infra/CI-workflow/tree/main/template`
 - 当前示例看板：`https://haowenz001.github.io/github-status-board/`
 
 关键点：
@@ -71,7 +71,7 @@
 ls -la .github/workflows 2>/dev/null || true
 ```
 
-- **没有 CI**：复制 `ci-gates` 的 `template/.github/workflows/ci.yml`。
+- **没有 CI**：复制 `CI-workflow` 的 `template/.github/workflows/ci.yml`。
 - **已有 CI**：不要覆盖。把 `gate` job 合并进现有 workflow；保留原有 job 和触发条件。
 - **已有同名 `CI` workflow**：合并 job，不要创建两个都叫 `CI` 的 workflow。
 
@@ -111,13 +111,13 @@ ls -la .github/workflows 2>/dev/null || true
 没有现成门禁时，复制四个文件：
 
 ```bash
-git clone --depth 1 https://github.com/agent-CI-Infra/ci-gates.git /tmp/ci-gates
+git clone --depth 1 https://github.com/agent-CI-Infra/CI-workflow.git /tmp/ci-workflow
 
 mkdir -p .github/workflows scripts/gate test/cases
 
-cp /tmp/ci-gates/template/.github/workflows/ci.yml .github/workflows/
-cp /tmp/ci-gates/template/.github/ci-gates.json .github/
-cp /tmp/ci-gates/scripts/gate/gate.mjs scripts/gate/
+cp /tmp/ci-workflow/template/.github/workflows/ci.yml .github/workflows/
+cp /tmp/ci-workflow/template/.github/ci-gates.json .github/
+cp /tmp/ci-workflow/scripts/gate/gate.mjs scripts/gate/
 ```
 
 第四个文件在第 A2 步创建。
@@ -239,10 +239,10 @@ PY
 ### A5. 提交、PR、required check
 
 ```bash
-git checkout -b add-ci-gates
+git checkout -b add-ci-workflow
 git add .github scripts/gate test/cases
-git commit -m "ci: add ci-gates"
-git push -u origin add-ci-gates
+git commit -m "ci: add CI workflow"
+git push -u origin add-ci-workflow
 ```
 
 开 PR 后确认：
@@ -585,7 +585,7 @@ Pages URL：
 ## 10. 参考
 
 - 单仓模板：`https://github.com/agent-CI-Infra/dashboard/tree/main/single-repo`
-- 门禁模板：`https://github.com/agent-CI-Infra/ci-gates/tree/main/template`
-- 门禁模板 README：`https://github.com/agent-CI-Infra/ci-gates/blob/main/README.md`
+- CI-workflow 模板：`https://github.com/agent-CI-Infra/CI-workflow/tree/main/template`
+- CI-workflow README：`https://github.com/agent-CI-Infra/CI-workflow/blob/main/README.md`
 - 示例看板：`https://haowenz001.github.io/github-status-board/`
 - 当前示例的 canonical `CI` run：`https://github.com/haowenz001/ci-gates-smoke-20261022/actions/workflows/ci.yml`

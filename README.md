@@ -1,6 +1,6 @@
-# ci-gates
+# CI-workflow
 
-> 用户仓库门禁的**唯一权威模板**：零依赖运行器、五条 lane、报告/用例 schema、可复制的 starter。
+> 用户仓库 **CI workflow（含门禁）** 的权威模板：零依赖运行器、五条 lane、报告/用例 schema、可复制的 starter。
 > 公共多仓 Dashboard：[`agent-CI-Infra/dashboard`](https://github.com/agent-CI-Infra/dashboard)
 > 单仓/私仓看板模板：[`dashboard/single-repo`](https://github.com/agent-CI-Infra/dashboard/tree/main/single-repo)
 
@@ -13,6 +13,8 @@
 - `ci-gates.json`：lane 命令、等级、observe/enforce；
 - `case-catalog.yaml`：用例目录，ready/todo/skipped；
 - 报告 artifact：`ci-gates-reports`。
+
+> **命名兼容**：仓名从 `ci-gates` 改为 `CI-workflow`；协议标识 `ci-gates/*`、artifact `ci-gates-reports`、配置 `.github/ci-gates.json` 保留。
 
 它不负责：分支保护设置、merge queue 开启、单仓看板 UI、公共 Dashboard 聚合。这些分别由仓库设置、[`single-repo`](https://github.com/agent-CI-Infra/dashboard/tree/main/single-repo) 和 [`dashboard`](https://github.com/agent-CI-Infra/dashboard) 负责。
 
@@ -32,15 +34,15 @@ AGENT.md                       # 面向用户 AI 的操作手册
 
 ## 三步接入
 
-在用户仓根目录执行（把 `<ci-gates>` 换成本仓路径）：
+在用户仓根目录执行（把 `<CI-workflow>` 换成本仓路径）：
 
 ```bash
 # 1. 复制 workflow、配置和用例骨架
 mkdir -p .github scripts/gate test/cases
-cp -R <ci-gates>/template/.github/. .github/
-cp <ci-gates>/scripts/gate/gate.mjs scripts/gate/
-cp <ci-gates>/template/test/cases/case-catalog.yaml test/cases/
-cp <ci-gates>/template/test/cases/example.test.ts test/cases/
+cp -R <CI-workflow>/template/.github/. .github/
+cp <CI-workflow>/scripts/gate/gate.mjs scripts/gate/
+cp <CI-workflow>/template/test/cases/case-catalog.yaml test/cases/
+cp <CI-workflow>/template/test/cases/example.test.ts test/cases/
 
 # 2. 改 .github/ci-gates.json 里的命令为项目真实命令
 # 3. 提交并开 PR
