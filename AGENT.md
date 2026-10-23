@@ -3,7 +3,7 @@
 > **读者**：用户自己的 AI coding agent。
 > **目标**：只依赖仓库内容和本文件，完成三件事：
 > 1. 在源仓接入 ci-gates 门禁（只上 CI 也可以）；
-> 2. 用 `github-status-board` 模板建单仓 Dashboard 并发布；
+> 2. 用 `dashboard/single-repo` 模板建单仓 Dashboard 并发布；
 > 3. 按真实代码补充用例，让看板显示 ready/todo/skipped 数量。
 >
 > 本文件不依赖聊天历史。每一步都必须以实际仓库内容为准，不能假设语言、包管理器、分支名或测试框架。
@@ -111,7 +111,7 @@ ls -la .github/workflows 2>/dev/null || true
 没有现成门禁时，复制四个文件：
 
 ```bash
-git clone --depth 1 https://github.com/agent-CI-Infra/dashboard.git /tmp/gsb-dashboard
+git clone --depth 1 https://github.com/agent-CI-Infra/ci-gates.git /tmp/ci-gates
 
 mkdir -p .github/workflows scripts/gate test/cases
 
